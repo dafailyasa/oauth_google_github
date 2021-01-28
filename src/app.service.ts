@@ -16,4 +16,14 @@ export class AppService {
       user: req.user
     }
   }
+  GithubLogin(req) {
+    if (!req.user) {
+      return 'No user from Github'
+    }
+
+    return {
+      message: 'User information from Github',
+      user: req.user
+    }
+  }
 }
