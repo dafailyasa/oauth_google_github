@@ -1,4 +1,4 @@
-import { Controller, Get, Req, UseGuards } from "@nestjs/common";
+import { Controller, Get, Post, Req, UseGuards } from "@nestjs/common";
 import { AppService } from "./app.service";
 import { AuthGuard } from "@nestjs/passport";
 @Controller()
@@ -28,5 +28,10 @@ export class AppController {
   @UseGuards(AuthGuard("github"))
   GithubAuthRedirect(@Req() req) {
     return this.appService.GithubLogin(req);
+  }
+
+  @Post("github/create/repository")
+  CreateRepository(@Req() req) {
+    return this.appService.createRepository(req);
   }
 }
