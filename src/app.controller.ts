@@ -29,9 +29,9 @@ export class AppController {
   GithubAuthRedirect(@Req() req) {
     return this.appService.GithubLogin(req);
   }
-
+  
   @Post("github/create/repository")
-  CreateRepository(@Req() req) {
-    return this.appService.createRepository(req);
+  async CreateRepository(@Req() req) {
+    return await this.appService.createRepository(req);
   }
 }

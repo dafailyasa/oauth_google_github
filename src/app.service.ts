@@ -5,9 +5,13 @@ import {
   HttpStatus,
 } from "@nestjs/common";
 import { map } from "rxjs/operators";
+import { AxiosResponse } from "axios";
+import { Observable } from "rxjs";
 
 @Injectable()
 export class AppService {
+  private readonly DATA_URL = "https://api.github.com/user/repos";
+
   constructor(private httpService: HttpService) {}
 
   getHello(): string {
@@ -34,7 +38,7 @@ export class AppService {
       user: req.user,
     };
   }
-  createRepository(req) {
+  async createRepository(req): Promise<Observable<AxiosResponse<any>>> {
     if (!req.headers.authorization) {
       throw new HttpException(
         "please return the token!",
@@ -42,9 +46,9 @@ export class AppService {
       );
     }
 
-    return this.httpService
+    return await this.httpService
       .post(
-        "https://api.github.com/user/repos",
+        this.DATA_URL,
         { name: req.body.name },
         {
           headers: {
